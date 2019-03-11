@@ -24,9 +24,15 @@ int read_coefficients(int *coeff_num_p, double **coeff_values_p,
 
 	// The number of filter coefficients is passed back in the variable pointed to by coeff_num_p.
 	coeff_num_p = &coeffNum;
+	printf("%04x\n", *coeff_num_p); // view in hex (testing)
+
+	/* while (fread(&coeffNum, 8, 1, file) != 0) */
+	/* { */
+	/* 	printf("%04x\n", coeffNum); // view in hex (testing) */
+	/* } */
 
 	// The function allocates enough memory using malloc() to store the filter coefficients
-	double *coeff = (double *)malloc(1 * coeffNum * sizeof(double));
+	double *coeff = (double *)malloc(*coeff_num_p * sizeof(double));
 	fread(coeff, 8, coeffNum, file);
 
 	// passes back a pointer to the filter coefficients pointed to by coeff_values_p.
@@ -34,7 +40,7 @@ int read_coefficients(int *coeff_num_p, double **coeff_values_p,
 	/* *coeff_values_p = coeff; */
 
 	// print values (test)
-	for (int i = 0; i < coeffNum; i++) { printf("%f\n", coeff[i]); }
+	for (int i = 0; i < coeffNum; i++) { printf("%f    ", coeff[i]); }
 
 	/* for (int i = 0; i < coeffNum; i++) { printf("%f\n", &coeff_values_p[i]); } */
 
