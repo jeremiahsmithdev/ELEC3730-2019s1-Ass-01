@@ -19,7 +19,7 @@ int Ass_01_Main(void) {
       "8k16bitpcm.wav",       "11k8bitpcm.wav",       "11k16bitpcm.wav",
       "8kmp38.wav",           "8k16bitpcm-Bad-0.wav", "8k16bitpcm-Bad-1.wav",
       "8k16bitpcm-Bad-2.wav", "8k16bitpcm-Bad-3.wav", NULL};
-  char *parse_string[] = {"one two three", " one  two three  ", "", NULL};
+  char *parse_string[] = {"one two three  ", " one  two three  asd asd asdasdad        fff f f ", "", NULL};
 
   // Loop variables
   int i, j;
@@ -107,8 +107,8 @@ int Ass_01_Main(void) {
         for (j = 0; j < count; j++) {
           printf("---> %d: '%s'\n", j + 1, (array_of_words)[j]);
         }
-        free(array_of_words[0]);
-        free(array_of_words);
+        //free(array_of_words[0]);
+        //free(array_of_words);
       }
       i++;
     }
