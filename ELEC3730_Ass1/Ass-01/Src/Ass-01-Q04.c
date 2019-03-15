@@ -81,7 +81,28 @@ for(t = s+1; *t !='\0'; t++){             //Loop begins at second character.
 
 }
 
+static int getWordCharCount(char* word, char delim){
+  int numChar = 0;
+  int i = 0;
 
+  while(*(word+i) != delim){
+    numChar++;
+    i++;
+  }
+
+
+  return numChar;
+}
+//
+//static void mutateDelimiter(char* inp, char delim){
+//  int lengthInp = getSize(inp);
+//
+//  for(int i = 0; i < lengthInp; i++){
+//    if(*(inp+i) == delim){
+//      inp[i] = '\0';
+//    }
+//  }
+//}
 /*
  * Break ups a string by a delimiter (currently a space " "). Will be modified later to include a delimiter parameter (dynamic for later assignments).
  *
@@ -97,65 +118,52 @@ for(t = s+1; *t !='\0'; t++){             //Loop begins at second character.
  */
 int string_parser(char *inp, char **array_of_words_p[]) {
 
+  int sizeOfInput = getSize(inp);
+  int wordsInInput = getNumWords(inp, ' ');
 
-  int sizeInput = getSize(inp);                                   //Total no. of characters in input. //NB: I QUESTION THE NECCISITY OF THIS INFORMATION, SHOULD ASK ABOUT.
-  int numWords = getNumWords(inp, ' ');                           //Number of words in the input char*.
-  int wordCount = 0;
+  if(wordsInInput == 0 || sizeOfInput == 0) return 0;
+  //char* copyOfInput = (char*)malloc(sizeof(char*)*sizeOfInput);
+  *array_of_words_p = (char**)malloc(sizeof(char*)*wordsInInput);
+  wordsInInput = 0;
+  char* carrier;
+//  strcpy(copyOfInput, inp);
+//  mutateDelimiter(copyOfInput, ' ');
+  int numChar = 0;
 
-
-  if(numWords == 0){                                              //Return 0 if no words 0.
-    return 0;
-  }
-
-  *array_of_words_p = malloc(numWords*sizeof(char));              //Allocate memory to array pointer. It corresponds to the number of words in input.
-
-  char* scanner = inp;                                            //Scanner moves through the contents of input.
-  char temp[sizeInput];                                           //This is an intermediary that holds words. It will always be big enough.
-  int charNum = 0;                                                //This is the number of characters in an individual word. Used for malloc.
-
-  while((scanner-inp)<sizeInput){                                 //Move through input char* until all char are read.
-
-    if((*scanner)!= ' '){                                         //No delim (' ') so keep building word.
-      if(charNum == 0){
-        strncpy(temp,scanner,1);                                     //If first char need to use strcpy.
-      }else{
-        strncat(temp + charNum,scanner,1);                           //Concatenate characters to make the word.
-      }
-
-      charNum++;
-      printf("\nTemp string is %s", temp);
-
-    }else if(*scanner == '\0'){                                  //If scanner reaches end (NULL) return the number of words.
-      return numWords;
-
-    }else{                                                      //Delimiter (' ') is encountered, store the word.
-      array_of_words_p[wordCount] = malloc(charNum*sizeof(char));//Allocate memory for the pointer to char to store words of size "charNum".
-      strncpy(array_of_words_p[wordCount],temp,charNum);                   //Store "charNum" characters in the pointer to char.
-      charNum = 0;                                              //Reset charNum
-      wordCount++;
+  for(int i = 0; i < sizeOfInput; i++){
+    carrier = inp + i;
+    if(*(carrier) != ' '){
+       numChar = getWordCharCount((carrier), ' ');
+       (*array_of_words_p)[wordsInInput] = (char*)malloc(sizeof(char)*(numChar+1));
+       i+= numChar;
+       wordsInInput++;
+       numChar = 0;
     }
-
-    scanner++;
   }
 
-  return -1;                                                    //Something went very wrong.
+    wordsInInput = 0;
+    numChar = 0;
+
+
+  for(int i = 0; i < sizeOfInput; i++){
+    carrier = inp + i;
+    if(*(carrier) != ' '){
+       (*array_of_words_p)[wordsInInput][numChar] = *(carrier);
+       numChar++;
+    }
+    if(*(carrier) == ' ' && i!=0){
+      numChar = 0;
+      if(*(carrier - 1) != ' '){
+        wordsInInput++;
+      }
+    }
+  }
+
+
+  return getNumWords(inp,' ');
+
 }
 
-
-
-/*
- * Malloc Plan
- *
- * 1. Allocate the Pointer to the Array "inputSize" bytes
- * 2. Individually allocate the size of each of the elements of the arrays to charNum
- * 3. ... unsure
- *
- *
- *
- *
- *
- *
- */
 
 
 
