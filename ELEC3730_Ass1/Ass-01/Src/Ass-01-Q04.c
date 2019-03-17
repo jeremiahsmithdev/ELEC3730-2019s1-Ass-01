@@ -122,12 +122,10 @@ int string_parser(char *inp, char **array_of_words_p[]) {
   int wordsInInput = getNumWords(inp, ' ');
 
   if(wordsInInput == 0 || sizeOfInput == 0) return 0;
-  //char* copyOfInput = (char*)malloc(sizeof(char*)*sizeOfInput);
+
   *array_of_words_p = (char**)malloc(sizeof(char*)*wordsInInput);
   wordsInInput = 0;
   char* carrier;
-//  strcpy(copyOfInput, inp);
-//  mutateDelimiter(copyOfInput, ' ');
   int numChar = 0;
 
   for(int i = 0; i < sizeOfInput; i++){

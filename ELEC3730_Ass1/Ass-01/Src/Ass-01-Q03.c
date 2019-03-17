@@ -5,12 +5,15 @@
 // Question 3
 
 #include "Ass-01.h"
+#include <stdio.h>
+#include <stdlib.h>
+
+// TODO just call functions from Q2
+
 
 int filter(char *filter_filename, char *input_wavefilename,
            char *output_wavefilename) {
-  //
-  // WRITE CODE HERE
-  //
-  printf("CODE TO BE WRITTEN...\n");
+
   return 1;
 }
+

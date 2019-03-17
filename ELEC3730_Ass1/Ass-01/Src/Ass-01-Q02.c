@@ -1,25 +1,20 @@
-//     $Date: 2019-01-05 04:50:09 +1100 (Sat, 05 Jan 2019) $
-// $Revision: 1529 $
-//   $Author: Peter $
-
-// Question 2
-
+#include <stdio.h>
 #include "Ass-01.h"
+#include <inttypes.h>
+#include <stdlib.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <fcntl.h>
+#include <err.h>
 
-int read_pcm_wavefile(pcm_wavefile_header_t *header_p, char **data_p,
-                      char *filename) {
-  //
-  // WRITE CODE HERE
-  //
-  printf("CODE TO BE WRITTEN...\n");
-  return 1;
-}
 
-int write_pcm_wavefile(pcm_wavefile_header_t *header_p, char *data,
-                       char *filename) {
-  //
-  // WRITE CODE HERE
-  //
-  printf("CODE TO BE WRITTEN...\n");
+// TODO
+// data_p variable should be assigned with "sample" values
+
+int16_t *samples = NULL;
+char* data;
+pcm_wavefile_header_t *header;
+int read_pcm_wavefile(pcm_wavefile_header_t *header_p, char **data_p, char *filename)
+{
   return 1;
 }
