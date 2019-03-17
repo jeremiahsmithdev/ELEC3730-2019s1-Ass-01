@@ -13,6 +13,9 @@
 pcm_wavefile_header_t *header;
 int16_t *data = NULL;
 
+int coeff_num;
+double *coeff_values; // Array of coefficient values
+
 int filter(char *filter_filename, char *input_wavefilename,
            char *output_wavefilename) {
 	int coefficients = 0;
@@ -21,22 +24,27 @@ int filter(char *filter_filename, char *input_wavefilename,
 	FILE *wofile;
 
 	header = (pcm_wavefile_header_t*)malloc(sizeof(pcm_wavefile_header_t));
-
 	data = (int16_t*)malloc(header->Subchunk2Size);//seg fault
-
-	printf("Opening filter file %s...\n", filter_filename);
+	printf("Opening filter file %s...\n\n", filter_filename);
 	ffile = fopen(filter_filename, "rb");
-	// TODO read filter
-	printf("Number of coefficients	= %x\n\n", coefficients);
 
-	printf("Opening input wavefile %s...", input_wavefilename);
+	/* *************** READ FILTER FUNCTION ************** */
+	int coeffNum;
+	fread(&coeffNum,4,1,ffile);
+	coeff_num = coeffNum;
+	double *coeff = (double *)malloc(coeff_num * sizeof(double));
+	fread(coeff, 8, coeffNum, ffile);
+	coeff_values = coeff;
+	/* *************** END READ FILTER FUNCTION ************** */
+
+	printf("Opening input wavefile %s...\n", input_wavefilename);
 	wifile = fopen(input_wavefilename, "rb");
 	fread(header, sizeof(pcm_wavefile_header_t), 1, wifile);
 
 	printf("ChunkID		= %c%c%c%c\n", header->ChunkID[0], header->ChunkID[1], header->ChunkID[2], header->ChunkID[3]);
 	printf("ChunkSize	= %u\n", header->ChunkSize);
 	printf("Format		= %c%c%c%c\n", header->Format[0], header->Format[1], header->Format[2], header->Format[3]);
-	printf("Subchunk1SiE	= %u\n", header->Subchunk1Size);
+	printf("Subchunk1ID	= %u\n", header->Subchunk1Size);
 	printf("AudioForma	= %u\n", header->AudioFormat);
 	printf("NumChannels	= %u\n", header->NumChannels);
 	printf("SampleRate	= %u\n", header->SampleRate);
@@ -49,7 +57,28 @@ int filter(char *filter_filename, char *input_wavefilename,
 	fread(data, sizeof(char), header->Subchunk2Size, wifile);
 
 	printf("Filter the input...\n\n");
-	// TODO MAIN CODE WILL BE HERE
+
+	data16 = (short*)data;
+	filtered_data = (short*)malloc((size_t)sizeof(short) * header->Subchunk2Size);//seg fault
+	int k,n;
+
+	printf("%d\n", coeff_num);
+
+	// main code
+	printf("%f\n", coeff_values[0]);
+	short* u = data;
+	short* b = (short*)malloc((size_t)sizeof(short) * header->Subchunk2Size);
+	for (k = 0; k < header->Subchunk2Size/2; k++)
+	{
+		// filter sample
+		b[k] = 0; // clear sample
+		for (n = 0; n < coeff_num; n++)
+		{
+			if (k-n >= 0) // apply filter
+				b[k] += u[k-n] * coeff_values[n];
+		}
+	}
+	data = b;
 	
 	printf("Write output wavefile %s...\n", output_wavefilename);
 	wofile = fopen(output_wavefilename, "wb");
@@ -61,6 +90,6 @@ int filter(char *filter_filename, char *input_wavefilename,
 
 int main()
 {
-	filter("FilterBP.bin", "8k16bitpcm.wav", "filteredWave.wav");
+	filter("FilterLP.bin", "8k16bitpcm.wav", "filteredWave.wav");
 	// test here
 }
