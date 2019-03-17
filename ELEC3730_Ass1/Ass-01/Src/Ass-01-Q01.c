@@ -33,12 +33,12 @@ int read_coefficients(int *coeff_num_p, double **coeff_values_p,
 	}
 
 
-	fseek(file, 0, SEEK_END);                                          //Seek to end of file.
-	long int fileLength = ftell(file);                                //This is cursor position at the end of file.
-	fseek(file,0,SEEK_SET);                                           //Put the cursor back to the beginning of the file.
+	fseek(file, 0, SEEK_END);                                           //Seek to end of file.
+	long int fileLength = ftell(file);                                  //This is cursor position at the end of file.
+	fseek(file,0,SEEK_SET);                                             //Put the cursor back to the beginning of the file.
 
 
-	fread(coeff_num_p,4,1,file);                                       // Read number of filter coefficient (n). Stored in 1st 4 bytes of data.
+	fread(coeff_num_p,4,1,file);                                        // Read number of filter coefficient (n). Stored in 1st 4 bytes of data.
 
 	if(fileLength != (*coeff_num_p*sizeof(double) + 4)){                //If file's length (size) does not match the number of numbers specified then it is not formatted correctly.
     printf("ERROR: The file is empty\n");
