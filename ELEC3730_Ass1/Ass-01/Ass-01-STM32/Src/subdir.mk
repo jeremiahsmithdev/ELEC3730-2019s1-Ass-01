@@ -45,7 +45,7 @@ Src/%.o: ../Src/%.c
 	@echo 'Building file: $<'
 	@echo 'Invoking: MCU GCC Compiler'
 	@echo $(PWD)
-	arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=hard -mfpu=fpv4-sp-d16 '-D__weak=__attribute__((weak))' '-D__packed=__attribute__((__packed__))' -DUSE_HAL_DRIVER -DSTM32F407xx -I"C:/Users/Tom/Desktop/ELEC3730-2019s1-Ass-01/ELEC3730_Ass1/Ass-01/Inc" -I"C:/Users/Tom/Desktop/ELEC3730-2019s1-Ass-01/ELEC3730_Ass1/Ass-01/Drivers/STM32F4xx_HAL_Driver/Inc" -I"C:/Users/Tom/Desktop/ELEC3730-2019s1-Ass-01/ELEC3730_Ass1/Ass-01/Drivers/STM32F4xx_HAL_Driver/Inc/Legacy" -I"C:/Users/Tom/Desktop/ELEC3730-2019s1-Ass-01/ELEC3730_Ass1/Ass-01/Drivers/CMSIS/Device/ST/STM32F4xx/Include" -I"C:/Users/Tom/Desktop/ELEC3730-2019s1-Ass-01/ELEC3730_Ass1/Ass-01/Drivers/CMSIS/Include"  -O3 -g3 -Wall -fmessage-length=0 -ffunction-sections -c -fmessage-length=0 -MMD -MP -MF"$(@:%.o=%.d)" -MT"$@" -o "$@" "$<"
+	arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=hard -mfpu=fpv4-sp-d16 '-D__weak=__attribute__((weak))' '-D__packed=__attribute__((__packed__))' -DUSE_HAL_DRIVER -DSTM32F407xx -I"C:/Users/tom/Desktop/ELEC3730-2019s1-Ass-01/ELEC3730_Ass1/Ass-01/Inc" -I"C:/Users/tom/Desktop/ELEC3730-2019s1-Ass-01/ELEC3730_Ass1/Ass-01/Drivers/STM32F4xx_HAL_Driver/Inc" -I"C:/Users/tom/Desktop/ELEC3730-2019s1-Ass-01/ELEC3730_Ass1/Ass-01/Drivers/STM32F4xx_HAL_Driver/Inc/Legacy" -I"C:/Users/tom/Desktop/ELEC3730-2019s1-Ass-01/ELEC3730_Ass1/Ass-01/Drivers/CMSIS/Device/ST/STM32F4xx/Include" -I"C:/Users/tom/Desktop/ELEC3730-2019s1-Ass-01/ELEC3730_Ass1/Ass-01/Drivers/CMSIS/Include"  -O3 -g3 -Wall -fmessage-length=0 -ffunction-sections -c -fmessage-length=0 -MMD -MP -MF"$(@:%.o=%.d)" -MT"$@" -o "$@" "$<"
 	@echo 'Finished building: $<'
 	@echo ' '
 

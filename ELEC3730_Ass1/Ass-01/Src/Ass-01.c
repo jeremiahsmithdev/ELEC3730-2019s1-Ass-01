@@ -61,14 +61,14 @@ int Ass_01_Main(void) {
   }
 
   // Question 2
-  /*
+
   {
     pcm_wavefile_header_t header;
     char filename_output[100];
     char *data;
     printf("\n-> Question 2...\n");
     i = 0;
-    while (filename_audio[i] != NULL) {
+   // while (filename_audio[i] != NULL) {
       printf("--> %20s: ", filename_audio[i]);
       if (read_pcm_wavefile(&header, &data, filename_audio[i]) == 0) {
         if (strcmp(filename_audio[i], "8k16bitpcm.wav") == 0) {
@@ -78,11 +78,11 @@ int Ass_01_Main(void) {
           write_pcm_wavefile(&header, data, filename_output);
         }
         free(data);
-      }
+   //   }
       i++;
-    }
+   }
   }
-
+/*
   // Question 3
   {
     char filename_output[100];

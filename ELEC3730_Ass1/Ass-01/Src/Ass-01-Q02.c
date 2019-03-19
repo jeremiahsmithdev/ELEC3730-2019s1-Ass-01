@@ -8,88 +8,26 @@
 #include <err.h>
 
 
-int16_t *samples = NULL;                            //Gotta comment these
+// TODO
+// data_p variable should be assigned with "sample" values
+
+char *samples = NULL;
 char* data;
-pcm_wavefile_header_t *header;
-
-
 
 /*
- *  Comment this
- *
+ * COMMENT THIS
  */
 int read_pcm_wavefile(pcm_wavefile_header_t *header_p, char **data_p, char *filename)
 {
+	FILE *file;
 
-  FILE *file;
+	file = fopen(filename, "rb");
+	fread(header_p, sizeof(pcm_wavefile_header_t), 1, file);
+	samples = (char*)malloc(header_p->Subchunk2Size);
+	fread(samples, sizeof(char), header_p->Subchunk2Size, file);
+	*data_p = samples;
 
-  if (file = fopen(filename, "rb") == NULL){                                        //Check if file exists
-    printf("ERROR: File does not exist\n");
-    return -1;
-  }
-
-  if (fread(header_p, sizeof(pcm_wavefile_header_t), 1 ,filename) != 1)){           //If the number of elements read in does not match 1 then something went wrong.
-      fprint("ERROR: The file header was not read correctly");
-      return -1;
-  }
-
-
-  if (strncmp(header_p->ChunkID, "RIFF", 4)){                                         //If strncmp returns 1, no match.
-    printf("ERROR: The ChunkID is not RIFF");
-    return -1;
-  }
-  if(strncmp(header_p->Format, "WAVE", 4)){                                           //If strncmp returns 1, no match.
-    printf("ERROR: The file format is not WAVE");
-    return -1;
-  }
-
-  if (header_p->AudioFormat != 1){                                                    //AudioFormat should be 1.
-    printf("ERROR: Only PCM encoding supported");
-    return -1;
-  }
-
-
-  samples = (int16_t*)malloc(header->Subchunk2Size);//seg fault
-  if (!samples)
-    errx(1, "Error allocating memory");
-  fread(samples, sizeof(char), header->Subchunk2Size, file);
-  /* if (read(fd, samples, header->Subchunk2Size) < header->Subchunk2Size) */
-  /* errx(1, "File broken: samples"); */
-  fclose(fd);
-}
-
-
-
-
-
-
-
-
-
-
-/*
- * Comment this...
- */
-int write_pcm_wavefile(pcm_wavefile_header_t *header_p, char *data, char *filename)
-{
-  printf("hello\n");
-  int fd;
-  FILE *file;
-  file = fopen(filename, "wb");
-
-  if (!filename)
-    errx(1, "Filename not specified");
-  if (!samples)
-    errx(1, "Samples buffer not specified");
-  if ((fd = creat(filename, 0666)) < 1)
-    errx(1, "Error creating file");
-  fwrite(header, sizeof(pcm_wavefile_header_t), 1, file);
-  /* if (write(file, header, sizeof(pcm_wavefile_header_t)) < sizeof(pcm_wavefile_header_t)) */
-  /* errx(1, "Error writing header"); */
-  fwrite(samples, sizeof(char), header->Subchunk2Size, file);
-  /* if (write(fd, samples, header->Subchunk2Size) < header->Subchunk2Size) */
-  /*     errx(1, "Error writing samples"); */
-  printf("ChunkID   = %c%c%c%c\n", header_p->ChunkID[0], header_p->ChunkID[1], header_p->ChunkID[2], header_p->ChunkID[3]);
+	printf("\nChunkID   = %c%c%c%c\n", header_p->ChunkID[0], header_p->ChunkID[1], header_p->ChunkID[2], header_p->ChunkID[3]);
   printf("ChunkSize = %u\n", header_p->ChunkSize);
   printf("Format    = %c%c%c%c\n", header_p->Format[0], header_p->Format[1], header_p->Format[2], header_p->Format[3]);
   printf("Subchunk1SiE  = %u\n", header_p->Subchunk1Size);
@@ -101,5 +39,36 @@ int write_pcm_wavefile(pcm_wavefile_header_t *header_p, char *data, char *filena
   printf("BitsPerSample = %u\n", header_p->BitsPerSample);
   printf("Subchunk2ID = %c%c%c%c\n", header_p->Subchunk2ID[0], header_p->Subchunk2ID[1], header_p->Subchunk2ID[2], header_p->Subchunk2ID[3]);
   printf("Subchunk2Size = %u\n", header_p->Subchunk2Size);
-  close(fd);
+  fclose(file);
+
+  return 0;
+}
+
+
+/*
+ * COMMENT THIS
+ */
+int write_pcm_wavefile(pcm_wavefile_header_t *header_p, char *data, char *filename)
+{
+	FILE *file;
+	file = fopen(filename, "wb");
+
+
+	printf("\nChunkID		= %c%c%c%c\n", header_p->ChunkID[0], header_p->ChunkID[1], header_p->ChunkID[2], header_p->ChunkID[3]);
+	printf("ChunkSize	= %u\n", header_p->ChunkSize);
+	printf("Format		= %c%c%c%c\n", header_p->Format[0], header_p->Format[1], header_p->Format[2], header_p->Format[3]);
+	printf("Subchunk1SiE	= %u\n", header_p->Subchunk1Size);
+	printf("AudioForma	= %u\n", header_p->AudioFormat);
+	printf("NumChannels	= %u\n", header_p->NumChannels);
+	printf("SampleRate	= %u\n", header_p->SampleRate);
+	printf("ByteRate	= %u\n", header_p->ByteRate);
+	printf("BlockAlign	= %u\n", header_p->BlockAlign);
+	printf("BitsPerSample	= %u\n", header_p->BitsPerSample);
+	printf("Subchunk2ID	= %c%c%c%c\n", header_p->Subchunk2ID[0], header_p->Subchunk2ID[1], header_p->Subchunk2ID[2], header_p->Subchunk2ID[3]);
+	printf("Subchunk2Size	= %u\n", header_p->Subchunk2Size);
+
+	fwrite(header_p, sizeof(pcm_wavefile_header_t), 1, file);
+	fwrite(samples, sizeof(char), header_p->Subchunk2Size, file);
+	close(file);
+	return 0;
 }
