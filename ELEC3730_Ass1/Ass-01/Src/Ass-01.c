@@ -88,14 +88,14 @@ int Ass_01_Main(void) {
     i = 0;
     char filename_output[100];
     printf("\n-> Question 3...\n");
-    //for (i = 0; i < 4; i++) {
+    for (i = 0; i < 4; i++) {
       printf("--> %17s: ", filename_filter[i]);
       snprintf(filename_output, 100, "%s-%s", filename_filter[i],
                filename_audio[0]);
       if (filter(filename_filter[i], filename_audio[0], filename_output) == 0) {
         printf("--> Written %s.\n", filename_output);
       }
-//    }
+    }
   }
 
 

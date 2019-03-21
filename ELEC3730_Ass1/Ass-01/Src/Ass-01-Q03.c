@@ -37,10 +37,15 @@ int filter(char *filter_filename, char *input_wavefilename,
 
 
   //READ ORIGINAL WAV
-  read_pcm_wavefile(&header_p, &data_p,input_wavefilename);
+  if(read_pcm_wavefile(&header_p, &data_p,input_wavefilename)!=0){
+    printf("ERROR: Wavefile could not be read. \n");
+    return -1;
+  }
 
   //READ FILTER
-  read_coefficients(&coeff_num, &coeff_values, filter_filename);                //This will allocate memory for coeff_values.
+  if(read_coefficients(&coeff_num, &coeff_values, filter_filename)!=0){
+    printf("ERROR: Filter file could not be read. \n");
+  }
 
   //FILTER THE FILE
   shortUnfiltered = (short*)data_p;
@@ -61,7 +66,10 @@ int filter(char *filter_filename, char *input_wavefilename,
   char* filteredData = (char*)shortFiltered;
 
   //WRITE FILE
-  write_pcm_wavefile(&header_p, filteredData, output_wavefilename);
+  if(write_pcm_wavefile(&header_p, filteredData, output_wavefilename)!=0){
+    printf("ERROR: Filtered content could not be written to file. \n");
+    return -1;
+  }
 
   //FREE DATA
   free(coeff_values);
