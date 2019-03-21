@@ -59,9 +59,9 @@ int Ass_01_Main(void) {
     //free(coeff_values);
     //free(&coeff_num);
   }
+*/
 
   // Question 2
-
   {
     pcm_wavefile_header_t header;
     char filename_output[100];
@@ -82,9 +82,10 @@ int Ass_01_Main(void) {
       i++;
    }
   }
-*/
+
   // Question 3
   {
+    i = 0;
     char filename_output[100];
     printf("\n-> Question 3...\n");
     //for (i = 0; i < 4; i++) {
