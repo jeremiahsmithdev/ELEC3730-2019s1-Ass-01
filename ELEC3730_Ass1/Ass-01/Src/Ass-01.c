@@ -37,7 +37,7 @@ int Ass_01_Main(void) {
     printf("ERROR: Unable to change directory\n");
     printf("ERROR: Check that directory 'Ass-01-Files' exists\n");
   }
-/*
+
   // Question 1
   {
     int coeff_num;
@@ -59,7 +59,7 @@ int Ass_01_Main(void) {
     //free(coeff_values);
     //free(&coeff_num);
   }
-*/
+
 
   // Question 2
   {
@@ -68,7 +68,7 @@ int Ass_01_Main(void) {
     char *data;
     printf("\n-> Question 2...\n");
     i = 0;
-   // while (filename_audio[i] != NULL) {
+   while (filename_audio[i] != NULL) {
       printf("--> %20s: ", filename_audio[i]);
       if (read_pcm_wavefile(&header, &data, filename_audio[i]) == 0) {
         if (strcmp(filename_audio[i], "8k16bitpcm.wav") == 0) {
@@ -78,7 +78,7 @@ int Ass_01_Main(void) {
           write_pcm_wavefile(&header, data, filename_output);
         }
         free(data);
-   //   }
+      }
       i++;
    }
   }
@@ -98,7 +98,7 @@ int Ass_01_Main(void) {
 //    }
   }
 
-/*
+
   // Question 4
   {
     char **array_of_words;
@@ -119,7 +119,7 @@ int Ass_01_Main(void) {
       i++;
     }
   }
-*/
+
 #endif
 
 #ifdef STM32F407xx

@@ -80,7 +80,16 @@ for(t = s+1; *t !='\0'; t++){             //Loop begins at second character.
 
 
 }
-
+/*
+ * Given a delimiter terminated word determines the number of characters in the word.
+ *
+ * @Params
+ *  char* word - target of the character count.
+ *  char delim - the character indicating the end of the word.
+ *
+ * @Returns
+ *  int - the number of characters in the word.
+ */
 static int getWordCharCount(char* word, char delim){
   int numChar = 0;
   int i = 0;
@@ -93,16 +102,6 @@ static int getWordCharCount(char* word, char delim){
 
   return numChar;
 }
-//
-//static void mutateDelimiter(char* inp, char delim){
-//  int lengthInp = getSize(inp);
-//
-//  for(int i = 0; i < lengthInp; i++){
-//    if(*(inp+i) == delim){
-//      inp[i] = '\0';
-//    }
-//  }
-//}
 /*
  * Break ups a string by a delimiter (currently a space " "). Will be modified later to include a delimiter parameter (dynamic for later assignments).
  *
