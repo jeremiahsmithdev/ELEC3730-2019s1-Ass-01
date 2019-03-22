@@ -53,7 +53,8 @@ static int getNumWords(char *s, char delim){
   char* t;                                  //This pointer will move through the input input pointer's contents.
   char tPrev;
   int wordCount = 0;
-  int flag1,flag2 = 0;                      //Flags for determining if word is present.
+  int flag1 = 0;
+  int flag2 = 0;                      //Flags for determining if word is present.
 
 
 
@@ -122,9 +123,9 @@ int string_parser(char *inp, char **array_of_words_p[]) {
 
   if(wordsInInput == 0 || sizeOfInput == 0) return 0;
 
-  *array_of_words_p = (char**)malloc(sizeof(char*)*wordsInInput);
+  *array_of_words_p = (char**)malloc(sizeof(char*) * wordsInInput);
   wordsInInput = 0;
-  char* carrier;
+  char* carrier;      //Points to characters in the input.
   int numChar = 0;
 
   for(int i = 0; i < sizeOfInput; i++){
@@ -144,15 +145,22 @@ int string_parser(char *inp, char **array_of_words_p[]) {
 
   for(int i = 0; i < sizeOfInput; i++){
     carrier = inp + i;
-    if(*(carrier) != ' '){
+    if(*(carrier) != ' '){                                          //If delimiter reached stop writing word to array.
        (*array_of_words_p)[wordsInInput][numChar] = *(carrier);
        numChar++;
     }
-    if(*(carrier) == ' ' && i!=0){
-      numChar = 0;
-      if(*(carrier - 1) != ' '){
-        wordsInInput++;
+
+    if(*(carrier) == ' ' && i!=0){                                  //If end of word reached and it's no beginning of input.
+      if(*(carrier - 1) != ' '){                                    //If previous character was not delim, then a new word has been logged.
+        (*array_of_words_p)[wordsInInput][numChar] = '\0';          //Append NULL to end of string to terminate word.
+        wordsInInput++;                                             //Count the word.
       }
+
+      numChar = 0;                                                  //Reset numbe rof characters.
+    }
+
+    if(i == (sizeOfInput - 1) && *(carrier) != ' '){                //If end of input reached and last character is not delim then append the NULL.
+      (*array_of_words_p)[wordsInInput][numChar] = '\0';            //Append NULL to end of string to terminate word.
     }
   }
 

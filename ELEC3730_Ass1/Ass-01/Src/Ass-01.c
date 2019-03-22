@@ -19,7 +19,7 @@ int Ass_01_Main(void) {
       "8k16bitpcm.wav",       "11k8bitpcm.wav",       "11k16bitpcm.wav",
       "8kmp38.wav",           "8k16bitpcm-Bad-0.wav", "8k16bitpcm-Bad-1.wav",
       "8k16bitpcm-Bad-2.wav", "8k16bitpcm-Bad-3.wav", NULL};
-  char *parse_string[] = {"         one two three  ", " hello there", " butt ", NULL};
+  char *parse_string[] = {"         one two three  ", " hello there asdasdad    ", " butt ", NULL};
 
   // Loop variables
   int i, j;
